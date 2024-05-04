@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:pricecoin/controller/price_controller.dart';
 
-import 'package:pricecoin/service/util/currency_formatter.dart';
+import 'package:pricecoin/service/util/currency_util.dart';
+import 'package:pricecoin/service/util/locale_util.dart';
 
 void main() {
   runApp(const PriceCoin());
@@ -20,6 +20,10 @@ class PriceCoin extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      localizationsDelegates: [
+        DefaultMaterialLocalizations.delegate,
+      ],
+      supportedLocales: LocaleUtils.locales,
       home: const Home(),
       debugShowCheckedModeBanner: false,
     );
@@ -34,12 +38,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static const String _endpoint = "https://blockchain.info/ticker";
-  String _price = "0";
+  final PriceController _priceController = PriceController();
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    FutureBuilder futureBuilder = _getFutureBuilder();
+
+    return Scaffold(
      body: Container(
        padding: const EdgeInsets.all(32),
        child: Column(
@@ -48,12 +53,14 @@ class _HomeState extends State<Home> {
            Image.asset("assets/images/bitcoin.png"),
            Padding(
              padding: const EdgeInsets.only(top: 30, bottom: 30),
-             child: _getFutureBuilder()
+             child: futureBuilder
            ),
            MaterialButton(
              color: Colors.orange,
              padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
-             onPressed: _retrievePrice,
+             onPressed: () {
+               _retrievePrice(futureBuilder);
+             },
              child: const Text(
                "Atualizar",
                style: TextStyle(
@@ -69,20 +76,16 @@ class _HomeState extends State<Home> {
    );
   }
 
-  Future<String> _retrievePrice() async {
-    http.Response response = await http.get(Uri.parse(_endpoint));
-    Map<String, dynamic> result = json.decode(response.body);
-    double value = result["BRL"]["buy"];
-
-    _price = CurrencyFormatter.parse(value);
-    return _price;
+  void _retrievePrice(FutureBuilder futureBuilder) async {
+    setState(() {
+      futureBuilder = _getFutureBuilder();
+    });
   }
 
   FutureBuilder _getFutureBuilder() {
     double initialPrice = 0;
     return FutureBuilder(
-      initialData: Text(CurrencyFormatter.parse(initialPrice), style: const TextStyle(fontSize: 35)),
-      future: _retrievePrice(),
+      future: _priceController.getBitcoinPrice(),
       builder: (context, snapshot) {
         ConnectionState connectionState = snapshot.connectionState;
 
