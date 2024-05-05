@@ -3,23 +3,24 @@ import 'dart:convert';
 
 import 'package:pricecoin/service/exception/pricecoin_exception.dart';
 
+import '../service/util/currency_util.dart';
+
 class PriceIntegration {
   static const String _blockchainURL = "https://blockchain.info/ticker";
-  static const String _connectionError = "Não foi possível conectar-se.";
-  
-  Future<double> bitcoinPrice() async {
+
+  Future<double> bitcoinPrice(String country) async {
     http.Response response = await http.get(Uri.parse(_blockchainURL));
 
     if (response.statusCode != 200) {
-      throw PriceCoinException(_connectionError);
+      throw PriceCoinException();
     }
     String body = response.body;
     if (body.isEmpty) {
-      throw PriceCoinException(_connectionError);
+      throw PriceCoinException();
     }
-
     Map<String, dynamic> object = json.decode(body);
+    String? coin = CurrencyFormatter.toCoin(country: country);
 
-    return object["BRL"]["buy"];
+    return object[coin]["buy"];
   }
 }
