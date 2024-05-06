@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:pricecoin/service/util/locale_util.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' as intl;
 
 class CountryService {
   static Locale _locale = LocaleUtils.defaultLocale;
@@ -19,16 +19,15 @@ class CountryService {
     } else {
       _locale =  LocaleUtils.defaultLocale;
     }
+    _configureLocale(_locale);
 
-    Intl.defaultLocale = _locale.toString();
     return _locale;
   }
 
   Locale changeNewLocaleByCountryCode(String countryCode) {
     Locale? selectedLocale = LocaleUtils.getLocaleByCountryCode(countryCode);
-
     _locale = selectedLocale ?? LocaleUtils.defaultLocale;
-    Intl.defaultLocale = _locale.toString();
+    _configureLocale(_locale);
 
     return _locale;
   }
@@ -39,8 +38,7 @@ class CountryService {
     String newCountry = LocaleUtils.defaultCountryCodeLocale;
     if (selectedLocale != null) {
       _locale = selectedLocale;
-      Intl.defaultLocale = _locale.toString();
-
+      _configureLocale(_locale);
       newCountry = selectedLocale.countryCode ?? LocaleUtils.defaultCountryCodeLocale;
     }
 
@@ -49,5 +47,9 @@ class CountryService {
 
   List<String> supportedCountryCodes() {
     return LocaleUtils.supportedLocales.keys.toList();
+  }
+
+  void _configureLocale(final Locale locale) {
+    intl.Intl.defaultLocale = locale.toString();
   }
 }
