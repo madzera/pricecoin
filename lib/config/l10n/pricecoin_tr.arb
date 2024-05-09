@@ -1,0 +1,7 @@
+{
+    "@@locale": "tr",
+    "connectionError": "Bağlantı kurulurken hata oluştu.",
+    "refreshButton": "Yenile",
+    "search": "Ara",
+    "write": "Aramak için yazmaya başlayın"
+}

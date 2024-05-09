@@ -1,0 +1,7 @@
+{
+    "@@locale": "et",
+    "connectionError": "Ühenduse loomisel tekkis viga.",
+    "refreshButton": "Värskenda",
+    "search": "Otsi",
+    "write": "Alustage kirjutamist otsimiseks"
+}

@@ -1,0 +1,7 @@
+{
+    "@@locale": "cs",
+    "connectionError": "Chyba při navazování spojení.",
+    "refreshButton": "Obnovit",
+    "search": "Hledat",
+    "write": "Začněte psát pro vyhledávání"
+}

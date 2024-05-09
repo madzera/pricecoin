@@ -1,0 +1,7 @@
+{
+    "@@locale": "da",
+    "connectionError": "Fejl ved etablering af forbindelse.",
+    "refreshButton": "Opdater",
+    "search": "Søg",
+    "write": "Begynd at skrive for at søge"
+}

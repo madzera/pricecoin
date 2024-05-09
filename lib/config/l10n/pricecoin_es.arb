@@ -1,7 +1,6 @@
 {
     "connectionError": "Error al establecer la conexión.",
     "refreshButton": "Actualizar",
-    "symbolCoin": "BRL",
     "search": "Buscar",
     "write": "Empieza a escribir para buscar"
 }

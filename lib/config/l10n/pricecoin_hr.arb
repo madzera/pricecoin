@@ -1,0 +1,7 @@
+{
+    "@@locale": "hr",
+    "connectionError": "Greška prilikom uspostavljanja veze.",
+    "refreshButton": "Osvježi",
+    "search": "Pretraživanje",
+    "write": "Počnite tipkati za pretraživanje"
+}

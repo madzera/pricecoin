@@ -1,0 +1,7 @@
+{
+    "@@locale": "pl",
+    "connectionError": "Błąd podczas nawiązywania połączenia.",
+    "refreshButton": "Odśwież",
+    "search": "Szukaj",
+    "write": "Zacznij pisać, aby wyszukać"
+}

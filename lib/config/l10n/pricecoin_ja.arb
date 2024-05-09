@@ -1,0 +1,7 @@
+{
+    "@@locale": "ja",
+    "connectionError": "接続の確立中にエラーが発生しました。",
+    "refreshButton": "更新",
+    "search": "検索",
+    "write": "検索するには入力を開始してください"
+}

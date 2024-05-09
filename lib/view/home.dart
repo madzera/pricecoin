@@ -103,10 +103,7 @@ class _HomeState extends State<Home> {
             break;
           }
         }
-        return Text(
-          price,
-          style: const TextStyle(fontSize: 35),
-        );
+        return _customizeTextOutput(price);
       },
     );
   }
@@ -158,5 +155,10 @@ class _HomeState extends State<Home> {
             (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397));
     return flag;
   }
-
+  
+  Text _customizeTextOutput(final String content) {
+    return double.tryParse(content) != null?
+      Text(content, style: const TextStyle(fontSize: 35)) :
+      Text(content, style: const TextStyle(fontSize: 18));
+  }
 }

@@ -1,0 +1,7 @@
+{
+    "@@locale": "sv",
+    "connectionError": "Fel vid upprättande av anslutning.",
+    "refreshButton": "Uppdatera",
+    "search": "Sök",
+    "write": "Börja skriva för att söka"
+}

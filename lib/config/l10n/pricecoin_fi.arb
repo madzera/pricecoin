@@ -1,0 +1,7 @@
+{
+    "@@locale": "fi",
+    "connectionError": "Virhe yhteyden muodostamisessa.",
+    "refreshButton": "Päivitä",
+    "search": "Etsi",
+    "write": "Aloita kirjoittaminen etsiäksesi"
+}

@@ -1,0 +1,7 @@
+{
+    "@@locale": "fr",
+    "connectionError": "Erreur lors de l'établissement de la connexion.",
+    "refreshButton": "Actualiser",
+    "search": "Rechercher",
+    "write": "Commencez à taper pour rechercher"
+}
