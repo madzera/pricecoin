@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../config/message_config.dart';
 import '../controller/price_controller.dart';
-import '../service/util/currency_util.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -19,10 +18,16 @@ class _HomeState extends State<Home> {
     final PriceController priceController = PriceController(context);
     final MessageConfig messageConfig = MessageConfig(context);
 
-    FutureBuilder futureBuilder = _getFutureBuilder(priceController);
+    FutureBuilder futureBuilder = _getFutureBuilder(priceController, messageConfig);
 
     return Scaffold(
       body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bck.png"),
+            fit: BoxFit.cover
+          )
+        ),
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +41,7 @@ class _HomeState extends State<Home> {
               color: Colors.orange,
               padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
               onPressed: () {
-                _retrievePrice(futureBuilder, priceController);
+                _retrievePrice(futureBuilder, messageConfig, priceController);
               },
               child: Text(
                 messageConfig.message(KeyMessage.refreshButton),
@@ -68,14 +73,16 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _retrievePrice(FutureBuilder futureBuilder, PriceController priceController) async {
+  void _retrievePrice(FutureBuilder futureBuilder, MessageConfig messageConfig,
+      PriceController priceController) async {
     setState(() {
-      futureBuilder = _getFutureBuilder(priceController);
+      futureBuilder = _getFutureBuilder(priceController, messageConfig);
     });
   }
 
-  FutureBuilder _getFutureBuilder(PriceController priceController) {
-    double initialPrice = 0;
+  FutureBuilder _getFutureBuilder(PriceController priceController,
+      MessageConfig messageConfig) {
+
     return FutureBuilder(
       future: priceController.getBitcoinPrice(),
       builder: (context, snapshot) {
@@ -85,7 +92,8 @@ class _HomeState extends State<Home> {
         switch (connectionState) {
           case ConnectionState.done: {
             if (snapshot.hasError) {
-              price = CurrencyFormatter.parse(initialPrice);
+              String errorMsg = messageConfig.message(KeyMessage.connectionError);
+              return _customizeTextOutput(errorMsg, 18);
             } else {
               price = snapshot.data;
             }
@@ -103,7 +111,7 @@ class _HomeState extends State<Home> {
             break;
           }
         }
-        return _customizeTextOutput(price);
+        return _customizeTextOutput(price, 35);
       },
     );
   }
@@ -120,17 +128,14 @@ class _HomeState extends State<Home> {
       onSelect: (Country country) {
         setState(() {
           priceController.changeCountry(country.countryCode);
-          _retrievePrice(futureBuilder, priceController);
+          _retrievePrice(futureBuilder, messageConfig, priceController);
         });
       },
-      // Optional. Sets the theme for the country list picker.
       countryListTheme: CountryListThemeData(
-        // Optional. Sets the border radius for the bottomsheet.
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40.0),
           topRight: Radius.circular(40.0),
         ),
-        // Optional. Styles the search field.
         inputDecoration: InputDecoration(
           labelText: messageConfig.message(KeyMessage.search),
           hintText: messageConfig.message(KeyMessage.write),
@@ -141,7 +146,6 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        // Optional. Styles the text in the search field
         searchTextStyle: const TextStyle(
           color: Colors.blue,
           fontSize: 18,
@@ -155,10 +159,8 @@ class _HomeState extends State<Home> {
             (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397));
     return flag;
   }
-  
-  Text _customizeTextOutput(final String content) {
-    return double.tryParse(content) != null?
-      Text(content, style: const TextStyle(fontSize: 35)) :
-      Text(content, style: const TextStyle(fontSize: 18));
+
+  Text _customizeTextOutput(final String content, final double fontSize) {
+      return Text(content, style: TextStyle(fontSize: fontSize));
   }
 }

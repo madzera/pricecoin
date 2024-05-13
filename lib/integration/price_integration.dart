@@ -6,7 +6,7 @@ import 'package:pricecoin/service/exception/pricecoin_exception.dart';
 import '../service/util/currency_util.dart';
 
 class PriceIntegration {
-  static const String _blockchainURL = "https://blockchain.info/tickerr";
+  static const String _blockchainURL = "https://blockchain.info/ticker";
 
   Future<double> bitcoinPrice(String country) async {
     http.Response response = await http.get(Uri.parse(_blockchainURL));
