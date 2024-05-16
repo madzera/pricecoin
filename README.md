@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#" target="_blank" >
-    <img alt="Price Coin" src="./assets/images/bitcoin.png"/>
+    <img alt="Price Coin" src="./assets/images/logo.png"/>
   </a>
 </p>
 
@@ -12,7 +12,7 @@
 - [About the PriceCoin](#about-the-pricecoin)
 - [User Guide](#user-guide)
 - [Technical Requirements](#tecnical-requirements)
-    - [Versions](versions)
+    - [Versions](#versions)
 
 ## About the PriceCoin
 PriceCoin is a small learning project, overly simple with the sole purpose of practicing the Dart programming language along with the Flutter framework. Specifically, I created this project to practice asynchronous programming in Dart using widgets like FutureBuilder. Additionally, there's also configured internationalization using the **country_picker** widget.
